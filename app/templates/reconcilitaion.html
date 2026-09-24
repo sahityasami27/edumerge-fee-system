@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reconciliation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="p-8 max-w-4xl mx-auto">
+    <h1 class="text-2xl font-bold mb-6">Reconciliation Dashboard</h1>
+    
+    <div class="mb-8 p-4 border rounded bg-gray-50">
+        <h2 class="font-bold mb-2">Upload Settlement CSV</h2>
+        <form action="/reconciliation/upload" method="post" enctype="multipart/form-data" class="flex gap-4">
+            <input type="file" name="file" class="border p-1" required>
+            <button type="submit" class="bg-blue-600 text-white px-4 py-1 rounded">Upload</button>
+        </form>
+    </div>
+
+    <h2 class="text-xl font-bold mb-2">Unresolved Mismatches</h2>
+    <table class="w-full text-left border-collapse border border-gray-300">
+        <thead>
+            <tr class="bg-gray-200">
+                <th class="border p-2">Batch ID</th>
+                <th class="border p-2">Gateway Ref</th>
+                <th class="border p-2">Mismatch Type</th>
+                <th class="border p-2">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for mismatch in mismatches %}
+            <tr>
+                <td class="border p-2">{{ mismatch.batch_id }}</td>
+                <td class="border p-2">{{ mismatch.gateway_ref }}</td>
+                <td class="border p-2 text-red-600">{{ mismatch.mismatch_type.value }}</td>
+                <td class="border p-2">
+                    <button class="bg-green-600 text-white px-2 py-1 rounded text-sm">Resolve</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

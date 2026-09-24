@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Ledger</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.11"></script>
+</head>
+<body class="p-8 max-w-4xl mx-auto">
+    <h1 class="text-2xl font-bold mb-4">Ledger: {{ student.name }} ({{ student.roll_no }})</h1>
+    <div class="mb-6 p-4 bg-gray-100 rounded">
+        <h2 class="text-xl">Total Outstanding: <strong>₹{{ balance / 100 }}</strong></h2>
+    </div>
+
+    <table class="w-full text-left border-collapse border border-gray-300 mb-8">
+        <thead>
+            <tr class="bg-gray-200">
+                <th class="border p-2">Date</th>
+                <th class="border p-2">Type</th>
+                <th class="border p-2">Note</th>
+                <th class="border p-2">Amount (₹)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in entries %}
+            <tr>
+                <td class="border p-2">{{ entry.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                <td class="border p-2">{{ entry.entry_type.value }}</td>
+                <td class="border p-2">{{ entry.note }}</td>
+                <td class="border p-2 text-right">{{ entry.amount_paise / 100 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
